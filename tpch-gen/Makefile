@@ -18,7 +18,7 @@ target/lib/dbgen.jar: target/tools/dbgen
 
 target/tools/dbgen: target/tpch_kit.zip
 	test -d target/tools/ || (cd target; unzip tpch_kit.zip -x __MACOSX/; ln -sf $$PWD/*/dbgen/ tools)
-	cd target/tools; cat ../../../patches/${MYOS}/*.patch | patch -p0
+#	cd target/tools; cat ../../../patches/${MYOS}/*.patch | patch -p0
 	cd target/tools; make -f makefile.suite clean; make -f makefile.suite CC=gcc DATABASE=ORACLE MACHINE=LINUX WORKLOAD=TPCH
 
 clean:
