@@ -105,6 +105,7 @@ function analyze_tables() {
 
 # --- SCRIPT START ---
 
+
 DEBUG_SCRIPT="true"
 SCALE=$1
 FORMAT=$2
@@ -125,8 +126,10 @@ if [[ "$FORMAT" != "orc" && "$FORMAT" != "parquet" ]]; then
     usageExit
 fi
 
-HOSTNAME=$(hostname -f)
-BEELINEURL="beeline -u 'jdbc:hive2://$HOSTNAME:10001/;transportMode=http'"
+echo "Apache Spark master host set to $KYUUBI_MASTER_HOST"
+echo "Apache Hive/Kyuubi frontend port set to $KYUUBI_FRONTEND_BIND_PORT"
+
+BEELINEURL="beeline -u 'jdbc:hive2://$KYUUBI_MASTER_HOST:$KYUUBI_FRONTEND_BIND_PORT/;transportMode=binary'"
 TEXT_DB="tpch_text_${SCALE}"
 DATABASE="tpch_bin_partitioned_${FORMAT}_${SCALE}"
 
