@@ -21,8 +21,6 @@ RUN apt-get update && \
   apt-get install -y ${BUILD_DEPS} && \
   cd /opt && \
   git clone https://github.com/jsminet/hive-benchmark.git && \
-  cd hive-benchmark && \
-  tpch-build.sh && \
   wget --progress=bar:force:noscroll -O kyuubi-spark-bin-hadoop.tgz \
     "https://github.com/NetEase/kyuubi/releases/download/v${KYUUBI_VERSION}/kyuubi-${KYUUBI_VERSION}-bin-spark-${SPARK_MAJOR_VERSION}-hadoop${HADOOP_MAJOR_VERSION}.tar.gz" && \ 
   tar -xvf kyuubi-spark-bin-hadoop.tgz && \
@@ -32,6 +30,10 @@ RUN apt-get update && \
   tar -xvf hadoop-binary.tar.gz && \
   rm hadoop-binary.tar.gz && \
   rm -rf /opt/hadoop-${HADOOP_MINOR_VERSION}/share/doc && \
+  cd hive-benchmark && \
+  tpch-build.sh && \
   rm -rf /var/lib/apt/lists/*
+
+WORKDIR /opt/hive-benchmark
 
 ENTRYPOINT ["tail", "-f", "/dev/null"] 
