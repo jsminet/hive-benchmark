@@ -21,9 +21,8 @@ RUN apt-get update && \
   apt-get install -y ${BUILD_DEPS} && \
   cd /opt && \
   git clone https://github.com/jsminet/hive-benchmark.git && \
+  cd hive-benchmark && \
   tpch-build.sh && \
   rm -rf /var/lib/apt/lists/*
-
-WORKDIR /opt/hive-benchmark
 
 ENTRYPOINT ["tail", "-f", "/dev/null"] 
