@@ -26,4 +26,4 @@ RUN apt-get update && \
 
 WORKDIR /opt/hive-benchmark
 
-CMD ["tail", "-f", "/dev/null"]
+ENTRYPOINT ["tail", "-f", "/dev/null"] 
