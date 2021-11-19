@@ -126,10 +126,15 @@ if [[ "$FORMAT" != "orc" && "$FORMAT" != "parquet" ]]; then
     usageExit
 fi
 
+KYUUBI_PROXY_USER=${KYUUBI_PROXY_USER:-root}
+KYUUBI_MASTER_HOST=${KYUUBI_MASTER_HOST:-0.0.0.0}
+KYUUBI_FRONTEND_BIND_PORT=${KYUUBI_FRONTEND_BIND_PORT:-10000}
+
+echo "User set to $KYUUBI_PROXY_USER"
 echo "Apache Spark master host set to $KYUUBI_MASTER_HOST"
 echo "Apache Hive/Kyuubi frontend port set to $KYUUBI_FRONTEND_BIND_PORT"
 
-BEELINEURL="beeline -u 'jdbc:hive2://$KYUUBI_MASTER_HOST:$KYUUBI_FRONTEND_BIND_PORT/;transportMode=binary'"
+BEELINEURL="beeline -u 'jdbc:hive2://$KYUUBI_MASTER_HOST:$KYUUBI_FRONTEND_BIND_PORT/;transportMode=binary' -n $KYUUBI_PROXY_USER"
 TEXT_DB="tpch_text_${SCALE}"
 DATABASE="tpch_bin_partitioned_${FORMAT}_${SCALE}"
 
